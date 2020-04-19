@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // 컬렉션 명을 매일 바꿔야 하기 때문에 모델 생성 함수를 export 한다

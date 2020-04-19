@@ -1,0 +1,13 @@
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Next: Node",
+  "runtimeVersion": "10.16.0",
+  "port": 9229,
+  "runtimeExecutable": "npm",
+  "runtimeArgs": ["run", "debug"],
+  "sourceMaps": true,
+  "outFiles": ["${workspaceRoot}/nextjs/.next/server/**/*.js"],
+  "smartStep": true,
+  "console": "integratedTerminal"
+}

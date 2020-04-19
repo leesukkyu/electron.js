@@ -1,0 +1,72 @@
+@import '~antd/dist/antd.less';
+
+@primary-color: #2f388f;
+
+.full-height {
+  height: 100%;
+}
+.text-center {
+  text-align: center;
+}
+#__next {
+  height: 100%;
+}
+
+.index-page-wrap {
+  height: 100%;
+}
+.main-page-wrap {
+  .date-nav-box {
+    .ant-picker,
+    .ant-btn {
+      position: relative;
+      &:hover {
+        z-index: 2;
+      }
+    }
+    .ant-picker-focused {
+      z-index: 2;
+    }
+  }
+
+  .day-item {
+    border: solid 1px #d9d9d9;
+    border-top: none;
+    height: 35px;
+    &.day-6,
+    &.day-0 {
+      color: #f44338;
+    }
+  }
+
+  .member-attendance-box {
+    width: 200px;
+    .header-item {
+      border: solid 1px #d9d9d9;
+      height: 32px;
+      border-left: none;
+    }
+    .day-item {
+      border-left: none;
+      .hour {
+        position: relative;
+        &:after {
+          content: '';
+          position: absolute;
+          right: 0px;
+          top: 50%;
+          margin-top: -8px;
+          width: 1px;
+          height: 16px;
+          background: #d9d9d9;
+        }
+      }
+    }
+    .time-box {
+      padding: 5px;
+      .ant-input {
+        border: none;
+      }
+    }
+  }
+}
