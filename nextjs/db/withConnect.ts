@@ -1,7 +1,6 @@
 import database from './config/database';
 
 const withConnect = (handler) => async (req, res) => {
-  debugger;
   if (!database.getReadyState()) {
     await database.connect();
   }

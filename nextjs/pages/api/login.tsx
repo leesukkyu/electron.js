@@ -11,7 +11,7 @@ const Login = (req, res) => {
       $eq: req.body.password,
     },
   })
-    .then((doc, b) => {
+    .then((doc) => {
       if (doc.length) {
         req.session.user = doc[0];
         res.status(200).json({
@@ -19,7 +19,7 @@ const Login = (req, res) => {
         });
       }
     })
-    .catch((a, b) => {
+    .catch(() => {
       res.status(200).json({
         isErr: true,
       });

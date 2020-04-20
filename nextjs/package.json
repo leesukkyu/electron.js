@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS=--inspect next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 6005"
   },
   "keywords": [],
   "author": "",

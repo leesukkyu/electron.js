@@ -5,8 +5,10 @@ import Router from 'next/router';
 import axios from 'axios';
 
 import '../public/css/antd.less';
+import { useState } from 'react';
 
 const Index = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const onFinish = (values) => {
     axios
       .post('/api/login', {
@@ -32,7 +34,7 @@ const Index = (props) => {
               key="2"
               name="normal_login"
               className="login-form"
-              initialValues={{ username: 'admin', password: '6400' }}
+              initialValues={{ username: '', password: '' }}
               onFinish={onFinish}
               style={{
                 width: '100%',
@@ -50,7 +52,17 @@ const Index = (props) => {
                 />
               </Form.Item>
               <Form.Item className="text-right">
-                <Button type="primary" block size="large" htmlType="submit" className="login-form-button">
+                <Button
+                  type="primary"
+                  block
+                  size="large"
+                  htmlType="submit"
+                  className="login-form-button"
+                  loading={isLoading}
+                  onClick={() => {
+                    setIsLoading(true);
+                  }}
+                >
                   Log in
                 </Button>
               </Form.Item>
@@ -64,7 +76,6 @@ const Index = (props) => {
 
 Index.getInitialProps = ({ req, res }) => {
   let views;
-  debugger;
   if (typeof window === 'undefined') {
     if (req.session.user) {
       if (res.writeHead) {
