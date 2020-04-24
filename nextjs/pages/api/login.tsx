@@ -17,6 +17,10 @@ const Login = (req, res) => {
         res.status(200).json({
           isErr: false,
         });
+      } else {
+        res.status(200).json({
+          isErr: true,
+        });
       }
     })
     .catch(() => {

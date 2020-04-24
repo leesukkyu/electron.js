@@ -5,18 +5,30 @@ import Router from 'next/router';
 import axios from 'axios';
 
 import '../public/css/antd.less';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const Index = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const onFinish = (values) => {
+  const formRef = useRef(null);
+
+  const onClickSubmit = () => {
+    setIsLoading(true);
+    const username = formRef.current.getFieldValue('username');
+    const password = formRef.current.getFieldValue('password');
     axios
       .post('/api/login', {
-        username: values.username,
-        password: values.password,
+        username: username,
+        password: password,
       })
       .then((rs) => {
-        Router.push('/main');
+        console.log(rs);
+        if (!rs.data.isErr) {
+          window.location.href = '/main';
+        }
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
       });
   };
 
@@ -26,7 +38,7 @@ const Index = (props) => {
         <Col span={12}>
           <Row>
             <Col key="1" span={10}>
-              <img src="/images/logo_horizontal.svg" />
+              <img style={{ width: '100%' }} src="/images/logo_horizontal.png" />
             </Col>
           </Row>
           <Row style={{ marginTop: '20px' }}>
@@ -35,7 +47,7 @@ const Index = (props) => {
               name="normal_login"
               className="login-form"
               initialValues={{ username: '', password: '' }}
-              onFinish={onFinish}
+              ref={formRef}
               style={{
                 width: '100%',
               }}
@@ -54,14 +66,12 @@ const Index = (props) => {
               <Form.Item className="text-right">
                 <Button
                   type="primary"
+                  htmlType="button"
                   block
                   size="large"
-                  htmlType="submit"
                   className="login-form-button"
                   loading={isLoading}
-                  onClick={() => {
-                    setIsLoading(true);
-                  }}
+                  onClick={onClickSubmit}
                 >
                   Log in
                 </Button>

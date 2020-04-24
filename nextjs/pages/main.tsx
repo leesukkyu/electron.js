@@ -41,7 +41,7 @@ class Main extends React.Component<MainProps, MainState> {
   newMemberPositionInput;
   static getInitialProps: ({ req, res }: { req: any; res: any }) => Promise<{ user: any[] }>;
 
-  constructor(props) {
+  constructor(props: Readonly<MainProps>) {
     super(props);
     this.state = {
       visible: false,
@@ -59,7 +59,11 @@ class Main extends React.Component<MainProps, MainState> {
   }
 
   componentDidMount() {
-    this.fetchInitialData();
+    if (!this.props.user) {
+      Router.push('/');
+    } else {
+      this.fetchInitialData();
+    }
   }
 
   fetchInitialData = async () => {
@@ -173,8 +177,6 @@ class Main extends React.Component<MainProps, MainState> {
   addMember = () => {
     const name = this.newMemberNameInput.current.input.value;
     const position = this.newMemberPositionInput.current.input.value;
-    this.newMemberNameInput.current.input.value = '';
-    this.newMemberPositionInput.current.input.value = '';
 
     if (name && position) {
       axios
@@ -183,8 +185,15 @@ class Main extends React.Component<MainProps, MainState> {
           position,
         })
         .then((rs) => {
-          this.state.memberList.push(rs.data.member);
-          this.forceUpdate();
+          console.log(rs);
+          if (!rs.data.isErr) {
+            this.state.memberList.push(rs.data.member);
+            this.forceUpdate();
+          }
+          this.newMemberNameInput.current.input.value = '';
+          this.newMemberPositionInput.current.input.value = '';
+          this.newMemberNameInput.current.state.value = '';
+          this.newMemberPositionInput.current.state.value = '';
         });
     }
   };
@@ -220,6 +229,9 @@ class Main extends React.Component<MainProps, MainState> {
   };
 
   render() {
+    if (!this.props.user) {
+      return false;
+    }
     const { username } = this.props.user;
     const isAdmin = username === 'admin' ? true : false;
     const { memberList, viewDate, visible, attendanceData } = this.state;
@@ -258,7 +270,7 @@ class Main extends React.Component<MainProps, MainState> {
       <div className="main-page-wrap">
         <Row align="middle" style={{ padding: '16px 8px' }}>
           <Col className="" span="11">
-            <img src="/images/logo_horizontal.svg" style={{ height: '40px', verticalAlign: 'middle' }} />
+            <img src="/images/logo_horizontal.png" style={{ height: '40px', verticalAlign: 'middle' }} />
             <SyncOutlined
               style={{ fontSize: '25px', marginLeft: '15px', verticalAlign: 'middle' }}
               spin={this.state.isLoading}
@@ -453,20 +465,9 @@ class Main extends React.Component<MainProps, MainState> {
 
 // TODO: 로그인 처리는 HOC에서
 Main.getInitialProps = async ({ req, res }) => {
-  let result = {
-    user: [],
+  return {
+    user: req.session.user,
   };
-  if (typeof window === 'undefined') {
-    if (!req.session.user) {
-      if (res.writeHead) {
-        res.writeHead(302, { Location: '/' });
-        res.end();
-      }
-    } else {
-      result.user = req.session.user;
-    }
-  }
-  return result;
 };
 
 export default withSession(Main);
