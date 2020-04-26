@@ -159,19 +159,38 @@ class Main extends React.Component {
     });
   };
 
-  onClickDownloadBtn = viewMemberList => {
-    console.log(viewMemberList);
-    var animalWS = XLSX.utils.json_to_sheet(
-      [
-        { name: '김윤식 차장', '2014-01-01': '20:80' },
-        { name: '김윤식 차장2', '2014-01-01': '20:80' },
-      ],
-      {
-        sheet: 'Sheet JS',
-      },
-    );
+  onClickDownloadBtn = (viewMemberList, daysList) => {
     var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, animalWS, 'animals');
+    wb.Props = {
+      Title: 'SheetJS Tutorial',
+      Subject: 'Test',
+      Author: 'ARSCO',
+      CreatedDate: new Date(),
+    };
+    wb.SheetNames.push('Test Sheet');
+    var nameList = viewMemberList.map(member => {
+      return member.name;
+    });
+    nameList.unshift('날짜');
+    var ws_data = [nameList];
+    daysList.forEach(day => {
+      var row = viewMemberList.map(member => {
+        if (member.attendance[day.format]) {
+          var start = member.attendance[day.format].start;
+          var end = member.attendance[day.format].end;
+          start = start ? start : '-';
+          end = end ? end : '-';
+          return start + '/' + end;
+        } else {
+          return '-';
+        }
+      });
+      row.unshift(day.format);
+      ws_data.push(row);
+    });
+    var ws = XLSX.utils.json_to_sheet(ws_data);
+    wb.Sheets['Test Sheet'] = ws;
+    console.log(XLSX);
     console.log(wb);
     return XLSX.writeFile(wb, undefined || 'SheetJSTableExport.' + 'xlsx');
   };
@@ -339,7 +358,7 @@ class Main extends React.Component {
 
             <IconButton
               onClick={() => {
-                this.onClickDownloadBtn(viewMemberList);
+                this.onClickDownloadBtn(viewMemberList, daysList);
               }}
             >
               <GetAppIcon></GetAppIcon>
