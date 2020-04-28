@@ -92,6 +92,11 @@ const Login = props => {
               onChange={e => {
                 setPassword(e.target.value);
               }}
+              onKeyUp={e => {
+                if (e.keyCode === 13) {
+                  setPassword(e.target.value);
+                }
+              }}
             />
           </Box>
         </Grid>

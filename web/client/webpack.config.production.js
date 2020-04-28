@@ -6,7 +6,7 @@ const { version } = require('./package.json');
 module.exports = merge(common, {
   mode: 'production',
   output: {
-    path: `/Users/leesukkyu/git/ele/web/server/public`,
+    path: `/Users/lee/git/electron.js/web/server/public`,
     filename: `[name].${version}.js`,
   },
 });

@@ -84,7 +84,7 @@ router.post('/member', function (req, res, next) {
 
 // 멤버 삭제하기
 router.delete('/member', function (req, res, next) {
-  if (!checkAuth()) {
+  if (!checkAuth(req)) {
     res.status(200).json({
       isErr: true,
     });
@@ -124,7 +124,7 @@ router.get('/attendance', function (req, res, next) {
 
 // 출석부 저장하기
 router.post('/attendance', function (req, res, next) {
-  if (!checkAuth()) {
+  if (!checkAuth(req)) {
     res.status(200).json({
       isErr: true,
     });
