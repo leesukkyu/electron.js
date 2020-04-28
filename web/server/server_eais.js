@@ -64,8 +64,8 @@ app.use(function (err, req, res, next) {
 });
 
 try {
-  app.listen(5500);
-  console.log('5500 포트 시작');
+  app.listen(6001);
+  console.log('6001 포트 시작');
 } catch (error) {
   console.log('error');
 }
