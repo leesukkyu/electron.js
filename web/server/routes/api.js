@@ -8,6 +8,10 @@ const Member = require('../db/models/member');
 
 const Attendance = require('../db/models/attendance');
 
+function checkAuth(req) {
+  return !!req.session.user;
+}
+
 // 로그인하기
 router.post('/login', function (req, res, next) {
   User.find({
@@ -38,7 +42,7 @@ router.post('/login', function (req, res, next) {
 });
 
 // 로그아웃하기
-router.get('/logout', function (req, res, next) {
+router.post('/logout', function (req, res, next) {
   req.session.destroy(() => {
     res.status(200).json({
       isErr: false,
@@ -80,6 +84,11 @@ router.post('/member', function (req, res, next) {
 
 // 멤버 삭제하기
 router.delete('/member', function (req, res, next) {
+  if (!checkAuth()) {
+    res.status(200).json({
+      isErr: true,
+    });
+  }
   const id = req.query.id;
   Member.findByIdAndRemove(id)
     .then(() => {
@@ -115,6 +124,11 @@ router.get('/attendance', function (req, res, next) {
 
 // 출석부 저장하기
 router.post('/attendance', function (req, res, next) {
+  if (!checkAuth()) {
+    res.status(200).json({
+      isErr: true,
+    });
+  }
   Attendance.findOneAndUpdate(
     {
       date: {

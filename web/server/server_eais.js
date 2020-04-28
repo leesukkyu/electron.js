@@ -1,20 +1,15 @@
-const createError = require('http-errors');
-
-const express = require('express');
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 const bodyParser = require('body-parser');
 
 const cors = require('cors');
 
-const path = require('path');
-
-const cookieParser = require('cookie-parser');
-
 const pageRouter = require('./routes/page');
-
 const apiRouter = require('./routes/api');
-
-const app = express();
 
 const database = require('./db/database');
 
@@ -24,32 +19,38 @@ const CONFIG = require('./config');
 
 database.connect();
 
+const app = express();
+app.set('etag', false);
 app.use(session({ secret: CONFIG.KEY, cookie: { maxAge: 60000 } }));
 
 // view engine setup
-app.set('views', path.join(__dirname));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
+app.use(logger('dev'));
+
 // cors
 app.use(cors());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
   }),
 );
-app.use('/', pageRouter);
-app.use('/api', apiRouter);
 
 app.use(function (req, res, next) {
-  next(createError(404));
+  next();
 });
+
+app.use('/', pageRouter);
+app.use('/api', apiRouter);
 
 // error handler
 app.use(function (err, req, res, next) {
