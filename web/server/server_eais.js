@@ -27,7 +27,7 @@ database.connect();
 app.use(session({ secret: CONFIG.KEY, cookie: { maxAge: 60000 } }));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 

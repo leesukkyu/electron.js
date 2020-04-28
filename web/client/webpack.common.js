@@ -5,8 +5,8 @@ const webpack = require('webpack');
 // 공통 설정
 module.exports = {
   entry: {
-    //login: ['react-app-polyfill/ie11', './src/login'],
-    main: ['react-app-polyfill/ie11', './src/main'],
+    login: ['react-app-polyfill/ie11', './src/login'],
+    //main: ['react-app-polyfill/ie11', './src/main'],
   },
   module: {
     rules: [
