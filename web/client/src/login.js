@@ -94,7 +94,7 @@ const Login = props => {
               }}
               onKeyUp={e => {
                 if (e.keyCode === 13) {
-                  setPassword(e.target.value);
+                  onClickSubmit(e.target.value);
                 }
               }}
             />

@@ -393,6 +393,7 @@ class Main extends React.Component {
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
+                  className="picker-input-box"
                 />
               </MuiPickersUtilsProvider>
               <IconButton

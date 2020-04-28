@@ -6,7 +6,7 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     login: ['react-app-polyfill/ie11', './src/login'],
-    //main: ['react-app-polyfill/ie11', './src/main'],
+    main: ['react-app-polyfill/ie11', './src/main'],
   },
   module: {
     rules: [

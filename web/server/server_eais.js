@@ -21,7 +21,7 @@ database.connect();
 
 const app = express();
 app.set('etag', false);
-app.use(session({ secret: CONFIG.KEY, cookie: { maxAge: 60000 } }));
+app.use(session({ secret: CONFIG.KEY, cookie: { maxAge: 600000 } }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

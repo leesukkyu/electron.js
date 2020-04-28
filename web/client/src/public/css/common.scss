@@ -48,10 +48,16 @@ body {
       .ant-picker-focused {
         z-index: 2;
       }
+      .picker-input-box{
+        input{
+          width: 70px;
+        }
+      }
     }
     .day-item {
       border: solid 1px #d9d9d9;
       border-top: none;
+      text-align: center;
       &:first-child {
         border-top: solid 1px #d9d9d9;
       }
