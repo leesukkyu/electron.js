@@ -115,7 +115,7 @@ class Main extends React.Component {
   };
 
   onChangeDatePicker = date => {
-    if (date.isValid()) {
+    if (date && date.isValid()) {
       if (this.state.viewDate.format('YYYY-MM') !== date.format('YYYY-MM')) {
         this.setState(
           {
