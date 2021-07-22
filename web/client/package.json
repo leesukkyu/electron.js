@@ -77,6 +77,6 @@
     "react-transition-group": "^4.3.0",
     "uuid": "^7.0.3",
     "webpack": "^4.42.1",
-    "xlsx": "^0.15.6"
+    "xlsx": "^0.17.0"
   }
 }
